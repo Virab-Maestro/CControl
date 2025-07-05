@@ -4,6 +4,7 @@ import GoalGroups from "@/components/GoalGroups.vue"
 
 <template>
   <GoalGroups />
+  <!-- actions panel -->
 </template>
 
 <style scoped>
