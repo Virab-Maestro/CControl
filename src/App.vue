@@ -1,12 +1,23 @@
 <script setup lang="ts">
 import GoalGroups from "@/components/GoalGroups.vue"
+import GoalToolbar from "@/components/GoalToolbar.vue";
 </script>
 
 <template>
-  <GoalGroups />
-  <!-- actions panel -->
+  <div class="wrapper">
+    <GoalGroups />
+    <GoalToolbar />
+  </div>
 </template>
 
 <style scoped>
-
+.wrapper{
+  display: flex;
+  gap: 50px;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100vh;
+  padding: 20px 70px;
+  background-color: #424242;
+}
 </style>

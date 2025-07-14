@@ -13,26 +13,15 @@ function filterGoals(goalType: GoalTypes):Goal[] | [] {
 </script>
 
 <template>
-  <div class="wrapper">
-    <div class="goal-groups">
-      <!-- why can't use enums as filterGoals argument? -->
-      <GoalGroup :goals="filterGoals('day')">Day</GoalGroup>
-      <GoalGroup :goals="filterGoals('global')">Global</GoalGroup>
-      <GoalGroup :goals="filterGoals('daily')">Daily</GoalGroup>
-    </div>
+  <div class="goal-groups">
+    <!-- why can't use enums as filterGoals argument? -->
+    <GoalGroup :goals="filterGoals('day')">Day</GoalGroup>
+    <GoalGroup :goals="filterGoals('global')">Global</GoalGroup>
+    <GoalGroup :goals="filterGoals('daily')">Daily</GoalGroup>
   </div>
 </template>
 
 <style scoped>
-.wrapper{
-  display: flex;
-  flex-direction: column;
-  justify-content: stretch;
-  height: 100vh;
-  padding: 20px 70px;
-  background-color: #424242;
-}
-
 .goal-groups {
   display: flex;
   justify-content: space-between;
