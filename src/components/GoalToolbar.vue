@@ -4,7 +4,8 @@ import {ref} from "vue";
 import type {Goal} from "../types";
 
 const goalStore = useGoalStore(),
-    addGoalDial = ref(false);
+    addGoalDial = ref(false),
+    newDayDial = ref(false);
 
 //bindings to dialog form
 const addGoalForm = ref(),
@@ -16,18 +17,28 @@ const addGoalForm = ref(),
     goalCurrentStep = ref<number>(),
     goalStepValue = ref<number>();
 
+const onNewDay = () => {
+  newDayDial.value = true;
+}
+
+const newDay = () => {
+  //delete day goals from store and LStorage
+  goalStore.newDay();
+  newDayDial.value = false;
+}
+
 const onAddGoal = () => {
   addGoalDial.value = true;
 }
 
-const addGoal = () => {
+const addGoal = async () => {
   //validate
+  const { valid: isFormValid } = await addGoalForm.value.validate();
+  if(!isFormValid) {
+    return;
+  }
 
   //add to goalStore.goalList
-  console.log(typeof goalTotal.value)
-  console.log(typeof goalCurrentStep.value)
-  console.log(typeof goalStepValue.value)
-
   const goal = {
     type: goalAcvType.value,
     desc: goalDesc.value,
@@ -38,20 +49,59 @@ const addGoal = () => {
   };
 
   goalStore.goalList.push(goal)
+  //save to local storage
 }
+
+const rules = {
+  goalDesc: [
+    (v) => !!v || "Какова цель",
+    (v) => v.length > 2 || "Мин. кол-во символов - 3"
+  ],
+  goalAcvType: [
+    (v) => !!v || "Какой тип цели",
+  ],
+  goalTotal: [
+    (v) => v > 0 || "Заполните поле",
+  ],
+  goalUnit: [
+    (v) => !!v || "Заполните поле",
+  ],
+  goalCurrentStep: [
+    (v) => v >= 0 || "Корректно заполните поле",
+    (v) => v <= goalTotal.value || "Current step не может быть больше total",
+  ],
+  goalStepValue: [
+    (v) => v > 0 || "Корректно заполните поле",
+    (v) => v < goalTotal.value || "Step value не может быть больше total",
+  ],
+}
+
 </script>
 
 <template>
   <div class="goal-toolbar">
     <v-btn icon="mdi-plus" @click="onAddGoal"/>
-    <v-btn append-icon="mdi-autorenew">New Day</v-btn>
+    <v-btn append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
   </div>
 
-<!-- dialog -->
+<!-- newDay dialog -->
+  <v-dialog v-model="newDayDial" :max-width="500">
+    <v-card>
+      <v-card-text>
+        Вы уверены? Все цели текущего дня будут стерты.
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="newDayDial = false">Не уверен</v-btn>
+        <v-btn @click="newDay">Уверен</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+<!-- addGoal dialog -->
   <v-dialog v-model="addGoalDial" :max-width="500">
     <v-card>
       <v-card-text>
-        <v-form v-model="addGoalForm" @submit.prevent="addGoal">
+        <v-form ref="addGoalForm" @submit.prevent="addGoal">
           <!--
         type: GoalTypes;
         desc: string;
@@ -60,23 +110,23 @@ const addGoal = () => {
         currentStep: number;
         stepValue: number;-->
 
-          <v-row><v-text-field v-model="goalDesc" label="Goal" /></v-row>
-          <v-row><v-select v-model="goalAcvType" :items="goalTypes"></v-select></v-row>
+          <v-row><v-text-field v-model="goalDesc" label="Goal" :rules="rules.goalDesc" /></v-row>
+          <v-row><v-select v-model="goalAcvType" :items="goalTypes" :rules="rules.goalAcvType" /></v-row>
           <v-row>
             <v-col>
-              <v-number-input v-model="goalTotal" label="Total" controlVariant="split"/>
+              <v-number-input v-model="goalTotal" label="Total" controlVariant="split" :rules="rules.goalTotal" />
             </v-col>
             <v-col>
-              <v-text-field v-model="goalUnit" label="Unit" />
+              <v-text-field v-model="goalUnit" label="Unit" :rules="rules.goalUnit" />
             </v-col>
           </v-row>
 
           <v-row>
             <v-col>
-              <v-number-input v-model="goalCurrentStep" label="CurrentStep" controlVariant="split"/>
+              <v-number-input v-model="goalCurrentStep" label="CurrentStep" controlVariant="split" :rules="rules.goalCurrentStep"/>
             </v-col>
             <v-col>
-              <v-number-input v-model="goalStepValue" label="StepValue" controlVariant="split"/>
+              <v-number-input v-model="goalStepValue" label="StepValue" controlVariant="split" :rules="rules.goalStepValue" />
             </v-col>
           </v-row>
 
