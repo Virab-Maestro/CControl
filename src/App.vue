@@ -17,7 +17,7 @@ import GoalToolbar from "@/components/GoalToolbar.vue";
   flex-direction: column;
   justify-content: stretch;
   height: 100vh;
-  padding: 20px 70px;
-  background-color: #424242;
+  padding: 20px 20px;
+  background-color: rgb(var(--v-theme-background));
 }
 </style>

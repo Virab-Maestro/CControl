@@ -49,7 +49,6 @@ const addGoal = async () => {
   };
 
   goalStore.goalList.push(goal)
-  //save to local storage
 }
 
 const rules = {
@@ -80,8 +79,8 @@ const rules = {
 
 <template>
   <div class="goal-toolbar">
-    <v-btn icon="mdi-plus" @click="onAddGoal"/>
-    <v-btn append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
+    <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
+    <v-btn color="info" append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
   </div>
 
 <!-- newDay dialog -->
@@ -98,18 +97,10 @@ const rules = {
   </v-dialog>
 
 <!-- addGoal dialog -->
-  <v-dialog v-model="addGoalDial" :max-width="500">
+  <v-dialog class="add-goal-dialog" v-model="addGoalDial" :max-width="500">
     <v-card>
       <v-card-text>
         <v-form ref="addGoalForm" @submit.prevent="addGoal">
-          <!--
-        type: GoalTypes;
-        desc: string;
-        unit: string;
-        total: number;
-        currentStep: number;
-        stepValue: number;-->
-
           <v-row><v-text-field v-model="goalDesc" label="Goal" :rules="rules.goalDesc" /></v-row>
           <v-row><v-select v-model="goalAcvType" :items="goalTypes" :rules="rules.goalAcvType" /></v-row>
           <v-row>
@@ -135,14 +126,19 @@ const rules = {
       </v-card-text>
     </v-card>
   </v-dialog>
-<!--  form-->
 </template>
 
-<style scoped>
+<style>
 .goal-toolbar {
   display: flex;
   align-items: center;
   gap: 25px;
   align-self: flex-end;
+}
+
+.add-goal-dialog .v-overlay__content {
+  position: absolute;
+  right: 0;
+  bottom: 80px;
 }
 </style>

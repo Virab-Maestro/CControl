@@ -36,42 +36,56 @@ const minusStep = (goal: Goal) => {
 </script>
 
 <template>
-  <v-card class="goal-group">
-    <v-card-title class="goal-group__title"><slot></slot></v-card-title>
+  <div class="goal-group__wrapper">
+    <v-chip
+        color="primary"
+        label
+    >
+      <slot></slot>
+    </v-chip>
 
-    <!-- v-list of other cards -->
-    <v-card-item>
-      <v-card class="mb-5 pa-2" v-for="(goal) in goals" variant="tonal">
-        <v-card-title>
-          {{ goal.desc }}
-        </v-card-title>
+    <v-card class="goal-group" color="primary" variant="elevated" rounded="xl">
+      <!-- v-list of other cards -->
+      <v-card-item>
+        <v-card class="mb-5 pa-2" v-for="(goal) in goals" color="secondary" variant="tonal">
+          <v-card-title class="text-info">
+            {{ goal.desc }}
+          </v-card-title>
 
-        <v-card-subtitle class="mt-3">
-          <v-row align="center" justify="space-between">
-            <v-col cols="9">
-              <v-progress-linear :model-value="Math.round(goal.currentStep / goal.total * 100)" color="blue-grey" height="25"/>
-            </v-col>
-            <v-col>
-              {{ goal.currentStep }}/{{ goal.total }} <span>{{ goal.unit }}</span>
-            </v-col>
-          </v-row>
-        </v-card-subtitle>
+          <v-card-subtitle class="mt-3">
+            <v-row align="center" justify="space-between">
+              <v-col cols="9">
+                <v-progress-linear :model-value="goal.currentStep / goal.total * 100" color="#76abae" height="25"/>
+              </v-col>
+              <v-col class="text-info">
+                {{ goal.currentStep }}/{{ goal.total }} <span>{{ goal.unit }}</span>
+              </v-col>
+            </v-row>
+          </v-card-subtitle>
 
-        <v-card-actions>
-          <v-btn icon="mdi-plus" @click="plusStep(goal)" :disabled="isBtnDisabled" />
-          <v-btn icon="mdi-minus" @click="minusStep(goal)" :disabled="isBtnDisabled" />
-        </v-card-actions>
-      </v-card>
-    </v-card-item>
-  </v-card>
+          <v-card-actions>
+            <v-btn color="surface" icon="mdi-plus" @click="plusStep(goal)" :disabled="isBtnDisabled" />
+            <v-btn color="surface" icon="mdi-minus" @click="minusStep(goal)" :disabled="isBtnDisabled" />
+          </v-card-actions>
+        </v-card>
+      </v-card-item>
+    </v-card>
+  </div>
 </template>
 
 <style scoped>
 .goal-group {
+  height: 100%;
+}
+
+.goal-group__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
   flex: 1;
 }
-
-.goal-group__title {
-
+.goal-group__wrapper:nth-child(2) {
+  flex: 2;
 }
+
 </style>
