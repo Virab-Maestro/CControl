@@ -1,11 +1,20 @@
 <script setup lang="ts">
 import useGoalStore from "@/stores/goalStore.ts";
-import {ref} from "vue";
+import { ref, watch } from "vue";
+import { useTheme } from "vuetify";
 import type {Goal} from "../types";
 
 const goalStore = useGoalStore(),
+    theme = useTheme(),
     addGoalDial = ref(false),
-    newDayDial = ref(false);
+    newDayDial = ref(false),
+    appThemes = ['dark', 'neon', 'warm', 'muted'],
+    activeTheme = ref('dark');
+
+//updating app theme
+watch(activeTheme, () => {
+  theme.global.name.value = activeTheme.value + "Theme";
+})
 
 //bindings to dialog form
 const addGoalForm = ref(),
@@ -81,6 +90,16 @@ const rules = {
   <div class="goal-toolbar">
     <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
     <v-btn color="info" append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
+    <v-select
+        v-model="activeTheme"
+        bg-color="info"
+        :items="appThemes"
+        label="Theme"
+        density="compact"
+        width="150"
+        rounded="xl"
+        hide-details
+    />
   </div>
 
 <!-- newDay dialog -->

@@ -55,7 +55,7 @@ const minusStep = (goal: Goal) => {
           <v-card-subtitle class="mt-3">
             <v-row align="center" justify="space-between">
               <v-col cols="9">
-                <v-progress-linear :model-value="goal.currentStep / goal.total * 100" color="#76abae" height="25"/>
+                <v-progress-linear :model-value="goal.currentStep / goal.total * 100" color="surface" height="25"/>
               </v-col>
               <v-col class="text-info">
                 {{ goal.currentStep }}/{{ goal.total }} <span>{{ goal.unit }}</span>

@@ -14,6 +14,37 @@ const darkTheme = {
     }
 }
 
+//Themes
+const neonTheme = {
+    colors: {
+        primary: "#FFFFFF",
+        secondary: "#00FF85",
+        info: "#1E90FF",
+        surface: "#FF0099",
+        background: "#0D0D0D",
+    }
+}
+
+const warmTheme = {
+    colors: {
+        primary: "#F5E8D8",
+        secondary: "#FF6F61",
+        info: "#DAA520",
+        surface: "#FF4500",
+        background: "#1C1C1C",
+    }
+}
+
+const mutedTheme = {
+    colors: {
+        primary: "#E4E4E4",
+        secondary: "#A8DADC",
+        info: "#FFC1CC",
+        surface: "#B39CD0",
+        background: "#2C2C2C",
+    }
+}
+
 export default createVuetify({
     components,
     directives,
@@ -21,6 +52,9 @@ export default createVuetify({
         defaultTheme: "darkTheme",
         themes: {
             darkTheme,
+            neonTheme,
+            warmTheme,
+            mutedTheme,
         }
     }
 })
