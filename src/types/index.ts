@@ -1,4 +1,5 @@
 export interface Goal {
+    id: number;
     type: GoalTypes;
     desc: string;
     unit: string;

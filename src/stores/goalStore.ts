@@ -18,9 +18,15 @@ export const useGoalStore = defineStore("goal", () => {
             .map((g) => g.type === "daily" ? {...g, currentStep: 0} : g)
     }
 
+    const editGoal = (id: number, goal: Goal) => {
+        const editingGoalIdx = goalList.value.findIndex(g => g.id === id);
+        goalList.value[editingGoalIdx] = goal;
+    }
+
     return {
         goalList,
         newDay,
+        editGoal,
     }
 })
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import GoalFormDial from "@/components/GoalFormDial.vue";
 import { ref } from "vue";
 import type { Goal } from "@/types";
 
@@ -7,8 +8,11 @@ defineProps<{
 }>()
 
 const isBtnDisabled = ref(false),
-    editGoalDial = ref(false),
-    rmGoalDial = ref(false);
+    editGoalDial = ref();
+
+const onEditGoal = () => {
+  editGoalDial.value = true;
+}
 
 const plusStep = (goal: Goal) => {
   //dis btn for a moment
@@ -62,9 +66,9 @@ const minusStep = (goal: Goal) => {
           />
         </template>
 
-        <!-- whar is 'key'? -->
-        <v-btn key="1" icon="mdi-trash-can-outline"></v-btn>
-        <v-btn key="2" icon="mdi-pencil"></v-btn>
+        <!-- what is 'key'? -->
+        <v-btn key="1" icon="mdi-trash-can-outline" />
+        <v-btn key="2" icon="mdi-pencil" @click="onEditGoal"/>
       </v-speed-dial>
     </template>
 
@@ -94,91 +98,7 @@ const minusStep = (goal: Goal) => {
     </v-card-actions>
   </v-card>
 
-  <!-- addGoal dialog -->
-  <v-dialog
-      class="add-goal-dialog"
-      v-model="addGoalDial"
-      :max-width="500"
-      :scrim="false">
-    <v-card title="Set Goal" color="info">
-      <!-- close -->
-      <template v-slot:append>
-        <v-icon class="cursor-pointer" icon="mdi-window-close" @click="addGoalDial = false" />
-      </template>
-
-      <v-card-text>
-        <v-form class="mt-6" ref="addGoalForm" @submit.prevent="addGoal">
-          <v-row dense>
-            <v-col>
-              <v-text-field
-                  v-model="goalDesc"
-                  label="Title"
-                  :rules="rules.goalDesc"
-                  variant="outlined"
-              />
-            </v-col>
-          </v-row>
-          <v-row dense>
-            <v-col>
-              <v-select
-                  v-model="goalAcvType"
-                  :items="goalTypes"
-                  :rules="rules.goalAcvType"
-                  label="Type"
-                  variant="outlined"
-              />
-            </v-col>
-          </v-row>
-          <v-row dense>
-            <v-col>
-              <v-number-input
-                  v-model="goalTotal"
-                  label="Total"
-                  controlVariant="split"
-                  :rules="rules.goalTotal"
-                  variant="outlined"
-              />
-            </v-col>
-            <v-col>
-              <v-text-field
-                  v-model="goalUnit"
-                  label="Unit"
-                  :rules="rules.goalUnit"
-                  variant="outlined"
-              />
-            </v-col>
-          </v-row>
-
-          <v-row dense>
-            <v-col>
-              <v-number-input
-                  v-model="goalCurrentStep"
-                  label="CurrentStep"
-                  controlVariant="split"
-                  :rules="rules.goalCurrentStep"
-                  variant="outlined"
-              />
-            </v-col>
-            <v-col>
-              <v-number-input
-                  v-model="goalStepValue"
-                  label="StepValue"
-                  controlVariant="split"
-                  :rules="rules.goalStepValue"
-                  variant="outlined"
-              />
-            </v-col>
-          </v-row>
-
-          <v-row>
-            <v-col>
-              <v-btn type="submit">Add</v-btn>
-            </v-col>
-          </v-row>
-        </v-form>
-      </v-card-text>
-    </v-card>
-  </v-dialog>
+  <GoalFormDial v-model="editGoalDial" form-type="edit" :goal="goal" />
 </template>
 
 <style scoped>
