@@ -47,7 +47,13 @@ const minusStep = (goal: Goal) => {
     <v-card class="goal-group" color="primary" variant="elevated" rounded="xl">
       <!-- v-list of other cards -->
       <v-card-item>
-        <v-card class="mb-5 pa-2" v-for="(goal) in goals" color="secondary" variant="tonal">
+        <v-card
+            v-for="(goal) in goals"
+            class="mb-5 pa-2 border-sm border-background"
+            color="secondary"
+            variant="tonal"
+            border="black"
+            >
           <v-card-title class="text-info">
             {{ goal.desc }}
           </v-card-title>

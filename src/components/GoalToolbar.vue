@@ -2,7 +2,7 @@
 import useGoalStore from "@/stores/goalStore.ts";
 import { ref, watch } from "vue";
 import { useTheme } from "vuetify";
-import type {Goal} from "../types";
+import type { Goal } from "../types";
 
 const goalStore = useGoalStore(),
     theme = useTheme(),
@@ -48,7 +48,7 @@ const addGoal = async () => {
   }
 
   //add to goalStore.goalList
-  const goal = {
+  const goal: Goal = {
     type: goalAcvType.value,
     desc: goalDesc.value,
     unit: goalUnit.value,
@@ -88,22 +88,22 @@ const rules = {
 
 <template>
   <div class="goal-toolbar">
-    <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
-    <v-btn color="info" append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
     <v-select
         v-model="activeTheme"
         bg-color="info"
         :items="appThemes"
-        label="Theme"
         density="compact"
         width="150"
-        rounded="xl"
+        rounded="lg"
+        variant="solo-filled"
         hide-details
     />
+    <v-btn color="info" append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
+    <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
   </div>
 
 <!-- newDay dialog -->
-  <v-dialog v-model="newDayDial" :max-width="500">
+  <v-dialog v-model="newDayDial" :max-width="500" :scrim="false">
     <v-card>
       <v-card-text>
         Вы уверены? Все цели текущего дня будут стерты.
@@ -116,7 +116,11 @@ const rules = {
   </v-dialog>
 
 <!-- addGoal dialog -->
-  <v-dialog class="add-goal-dialog" v-model="addGoalDial" :max-width="500">
+  <v-dialog
+      class="add-goal-dialog"
+      v-model="addGoalDial"
+      :max-width="500"
+      :scrim="false">
     <v-card>
       <v-card-text>
         <v-form ref="addGoalForm" @submit.prevent="addGoal">
