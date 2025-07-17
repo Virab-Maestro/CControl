@@ -27,6 +27,7 @@ onMounted(() => {
 
 <style scoped>
 .goal-groups {
+  max-height: calc(100% - 118px);
   display: flex;
   justify-content: space-between;
   align-items: stretch;

@@ -13,7 +13,9 @@ export const useGoalStore = defineStore("goal", () => {
     }, { deep: true })
 
     const newDay = () => {
-        goalList.value = goalList.value.filter((g) => g.type !== "day");
+        goalList.value = goalList.value
+            .filter((g) => g.type !== "day")
+            .map((g) => g.type === "daily" ? {...g, currentStep: 0} : g)
     }
 
     return {

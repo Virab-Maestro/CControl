@@ -11,6 +11,7 @@ const darkTheme = {
         info: "#444444", //text
         surface: "#888888", //accent(buttons)
         background: "#121212", //background
+        error: "#FFFFFF",
     }
 }
 

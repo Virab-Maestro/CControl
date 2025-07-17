@@ -1,38 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import type { Goal } from "@/types";
+import Goal from "@/components/Goal.vue";
+import type { Goal as GoalT } from "@/types";
 
-const props = defineProps<{
-  goals: Goal[]
+defineProps<{
+  goals: GoalT[]
 }>()
 
-const isBtnDisabled = ref(false);
-
-const plusStep = (goal: Goal) => {
-  //dis btn for a moment
-  isBtnDisabled.value = true;
-  setTimeout(() => {
-    isBtnDisabled.value = false;
-  }, 700)
-
-  if(goal.currentStep < goal.total) {
-    goal.currentStep = goal.currentStep + goal.stepValue
-  }
-  //send data to DB
-}
-
-const minusStep = (goal: Goal) => {
-  //dis btn for a moment
-  isBtnDisabled.value = true;
-  setTimeout(() => {
-    isBtnDisabled.value = false;
-  }, 500)
-
-  if(goal.currentStep >= goal.stepValue) {
-    goal.currentStep = goal.currentStep - goal.stepValue
-  }
-  //send data to DB
-}
 </script>
 
 <template>
@@ -41,39 +14,13 @@ const minusStep = (goal: Goal) => {
         color="primary"
         label
     >
+      <!-- group name -->
       <slot></slot>
     </v-chip>
 
-    <v-card class="goal-group" color="primary" variant="elevated" rounded="xl">
-      <!-- v-list of other cards -->
+    <v-card class="goal-group overflow-auto" color="primary" variant="elevated" rounded="xl" height="100%">
       <v-card-item>
-        <v-card
-            v-for="(goal) in goals"
-            class="mb-5 pa-2 border-sm border-background"
-            color="secondary"
-            variant="tonal"
-            border="black"
-            >
-          <v-card-title class="text-info">
-            {{ goal.desc }}
-          </v-card-title>
-
-          <v-card-subtitle class="mt-3">
-            <v-row align="center" justify="space-between">
-              <v-col cols="9">
-                <v-progress-linear :model-value="goal.currentStep / goal.total * 100" color="surface" height="25"/>
-              </v-col>
-              <v-col class="text-info">
-                {{ goal.currentStep }}/{{ goal.total }} <span>{{ goal.unit }}</span>
-              </v-col>
-            </v-row>
-          </v-card-subtitle>
-
-          <v-card-actions>
-            <v-btn color="surface" icon="mdi-plus" @click="plusStep(goal)" :disabled="isBtnDisabled" />
-            <v-btn color="surface" icon="mdi-minus" @click="minusStep(goal)" :disabled="isBtnDisabled" />
-          </v-card-actions>
-        </v-card>
+        <Goal v-for="goal in goals" :goal />
       </v-card-item>
     </v-card>
   </div>
@@ -81,9 +28,8 @@ const minusStep = (goal: Goal) => {
 
 <style scoped>
 .goal-group {
-  height: 100%;
+  scrollbar-width: thin;
 }
-
 .goal-group__wrapper {
   display: flex;
   flex-direction: column;
