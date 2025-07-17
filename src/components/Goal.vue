@@ -2,16 +2,27 @@
 import GoalFormDial from "@/components/GoalFormDial.vue";
 import { ref } from "vue";
 import type { Goal } from "@/types";
+import useGoalStore from "@/stores/goalStore.ts";
 
-defineProps<{
+const props = defineProps<{
   goal: Goal
 }>()
 
+const goalStore = useGoalStore();
+
 const isBtnDisabled = ref(false),
-    editGoalDial = ref();
+    editGoalDial = ref(),
+    rmGoalDial = ref();
 
 const onEditGoal = () => {
   editGoalDial.value = true;
+}
+
+const onRmGoal = () => {
+  rmGoalDial.value = true;
+}
+const rmGoal = () => {
+  goalStore.rmGoal(props.goal.id);
 }
 
 const plusStep = (goal: Goal) => {
@@ -67,7 +78,7 @@ const minusStep = (goal: Goal) => {
         </template>
 
         <!-- what is 'key'? -->
-        <v-btn key="1" icon="mdi-trash-can-outline" />
+        <v-btn key="1" icon="mdi-trash-can-outline" @click="onRmGoal"/>
         <v-btn key="2" icon="mdi-pencil" @click="onEditGoal"/>
       </v-speed-dial>
     </template>
@@ -98,7 +109,21 @@ const minusStep = (goal: Goal) => {
     </v-card-actions>
   </v-card>
 
+  <!-- editGoal dialog -->
   <GoalFormDial v-model="editGoalDial" form-type="edit" :goal="goal" />
+
+  <!-- rmGoal dialog -->
+  <v-dialog v-model="rmGoalDial" :max-width="500" :scrim="false">
+    <v-card color="info">
+      <v-card-text>
+        Do you really want to delete the goal?
+      </v-card-text>
+      <v-card-actions>
+        <v-btn @click="rmGoalDial = false">No</v-btn>
+        <v-btn @click="rmGoal">Yes</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <style scoped>

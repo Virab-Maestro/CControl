@@ -23,10 +23,16 @@ export const useGoalStore = defineStore("goal", () => {
         goalList.value[editingGoalIdx] = goal;
     }
 
+    const rmGoal = (id: number) => {
+        const rmGoalIdx = goalList.value.findIndex(g => g.id === id);
+        goalList.value.splice(rmGoalIdx, 1);
+    }
+
     return {
         goalList,
         newDay,
         editGoal,
+        rmGoal,
     }
 })
 
