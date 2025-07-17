@@ -52,11 +52,11 @@ const onAddGoal = () => {
   <v-dialog v-model="newDayDial" :max-width="500" :scrim="false">
     <v-card color="info">
       <v-card-text>
-        Вы уверены? Все цели текущего дня будут стерты.
+        Do you wanna start a new day?
       </v-card-text>
       <v-card-actions>
-        <v-btn @click="newDayDial = false">Не уверен</v-btn>
-        <v-btn @click="newDay">Уверен</v-btn>
+        <v-btn @click="newDayDial = false">No</v-btn>
+        <v-btn @click="newDay">Yes</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
