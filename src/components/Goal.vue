@@ -60,9 +60,10 @@ const minusStep = (goal: Goal) => {
       color="secondary"
       variant="tonal"
       append-icon="$vuetify"
+      rounded="xl"
   >
     <template v-slot:title>
-      <h4 class="text-info">
+      <h4 class="text-info text-truncate">
         {{ goal.desc }}
       </h4>
     </template>

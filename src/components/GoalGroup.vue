@@ -19,7 +19,7 @@ defineProps<{
     </v-chip>
 
     <v-card class="goal-group overflow-auto" color="primary" variant="elevated" rounded="xl" height="100%">
-      <v-card-item>
+      <v-card-item class="pa-5">
         <Goal v-for="goal in goals" :goal />
       </v-card-item>
     </v-card>
