@@ -14,12 +14,12 @@ const addGoalDial = defineModel();
 //bindings to dialog form
 const addGoalForm = ref(),
     goalDesc = ref<string>(),
-    goalAcvType = ref<string>(),
+    goalAcvType = ref<string>("day"),
     goalTypes = ["day", "daily", "global"],
     goalTotal = ref<number>(0),
     goalUnit = ref<string>(),
     goalCurrentStep = ref<number>(0),
-    goalStepValue = ref<number>(0);
+    goalStepValue = ref<number>(1);
 
 if(props.formType === "edit") {
   goalDesc.value = props.goal.desc;
