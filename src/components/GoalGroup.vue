@@ -36,8 +36,11 @@ defineProps<{
   gap: 40px;
   flex: 1;
 }
-.goal-group__wrapper:nth-child(2) {
-  flex: 2;
+
+@media(min-width: 1280px) {
+  .goal-group__wrapper:nth-child(2) {
+    flex: 2;
+  }
 }
 
 </style>

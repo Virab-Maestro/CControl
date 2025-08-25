@@ -67,6 +67,7 @@ const onAddGoal = () => {
 
 <style>
 .goal-toolbar {
+  max-width: 100%;
   display: flex;
   align-items: center;
   gap: 25px;

@@ -5,7 +5,8 @@ import { ref, watch } from "vue"
 import type { Goal } from "@/types";
 
 export const useGoalStore = defineStore("goal", () => {
-    const goalList = ref<Goal[] | []>([])
+    const goalList = ref<Goal[] | []>([]),
+        actvGoalMob = ref<string>("any")
 
     watch(goalList, () => {
         localStorage.setItem("goals", JSON.stringify(goalList.value))
@@ -30,6 +31,7 @@ export const useGoalStore = defineStore("goal", () => {
 
     return {
         goalList,
+        actvGoalMob,
         newDay,
         editGoal,
         rmGoal,

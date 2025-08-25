@@ -11,13 +11,19 @@ import GoalToolbar from "@/components/GoalToolbar.vue";
 </template>
 
 <style scoped>
-.wrapper{
+.wrapper {
   display: flex;
   gap: 50px;
   flex-direction: column;
   justify-content: stretch;
   height: 100vh;
-  padding: 20px 20px;
+  padding: 20px;
   background-color: rgb(var(--v-theme-background));
+}
+
+@media(max-width: 1280px) {
+  .wrapper {
+    padding: 10px;
+  }
 }
 </style>
