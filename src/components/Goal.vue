@@ -22,6 +22,7 @@ const onRmGoal = () => {
   rmGoalDial.value = true;
 }
 const rmGoal = () => {
+  rmGoalDial.value = false;
   goalStore.rmGoal(props.goal.id);
 }
 

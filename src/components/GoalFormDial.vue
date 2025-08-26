@@ -77,11 +77,11 @@ const editGoal = async () => {
 
 const refreshForm = () => {
   goalDesc.value = null;
-  goalAcvType.value = null;
+  goalAcvType.value = 'day';
   goalUnit.value = null;
   goalTotal.value = 0;
   goalCurrentStep.value = 0;
-  goalStepValue.value = 0;
+  goalStepValue.value = 1;
 }
 
 const rules = {

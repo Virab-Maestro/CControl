@@ -46,15 +46,16 @@ function isActive(t) {
 .goal-groups-wrapper {
   position: relative;
   max-height: calc(100% - 118px);
+  flex: 1;
 }
 
 .goal-groups {
   max-height: 100%;
+  min-height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: stretch;
   gap: 35px;
-  flex: 1;
 }
 
 .goal-groups__nav {
