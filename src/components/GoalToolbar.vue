@@ -9,7 +9,7 @@ const goalStore = useGoalStore(),
     addGoalDial = ref(),
     newDayDial = ref(false),
     appThemes = ['dark', 'neon', 'warm', 'muted'],
-    activeTheme = ref('dark');
+    isAuthorized = ref(false);
 
 //updating app theme
 const updateActvTheme = (newTheme) => {
@@ -34,42 +34,48 @@ const onAddGoal = () => {
 
 <template>
   <div class="goal-toolbar">
-    <v-menu
-        location="top center"
-    >
-      <template v-slot:activator="{props}">
-        <v-btn v-bind="props" icon="">
-          <v-sheet
-              rounded="circle"
-              class="pa-2"
-              :color="theme.current.value.colors.primary"
-          />
-        </v-btn>
-      </template>
+    <v-btn
+        :icon="isAuthorized ? 'mdi-account-outline' : 'mdi-account-question-outline'"
+    ></v-btn>
 
-      <v-list
-          class="overflow-hidden"
-          @click:select="(selScheme) => updateActvTheme(selScheme.id)"
+    <div class="goal-toolbar__inner">
+      <v-menu
+          location="top center"
       >
-        <v-list-item
-            v-for="(scheme, idx) in appThemes"
-            :key="idx"
-            :value="scheme"
-            rounded="circle"
-            max-width="48px"
-        >
-          <v-sheet
-              rounded="circle"
-              width="16px"
-              height="16px"
-              :color="theme.computedThemes.value[(scheme + 'Theme')].colors.primary"
-          />
-        </v-list-item>
-      </v-list>
-    </v-menu>
+        <template v-slot:activator="{props}">
+          <v-btn v-bind="props" icon="">
+            <v-sheet
+                rounded="circle"
+                class="pa-2"
+                :color="theme.current.value.colors.primary"
+            />
+          </v-btn>
+        </template>
 
-    <v-btn color="info" icon="mdi-autorenew" @click="onNewDay" />
-    <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
+        <v-list
+            class="overflow-hidden"
+            @click:select="(selScheme) => updateActvTheme(selScheme.id)"
+        >
+          <v-list-item
+              v-for="(scheme, idx) in appThemes"
+              :key="idx"
+              :value="scheme"
+              rounded="circle"
+              max-width="48px"
+          >
+            <v-sheet
+                rounded="circle"
+                width="16px"
+                height="16px"
+                :color="theme.computedThemes.value[(scheme + 'Theme')].colors.primary"
+            />
+          </v-list-item>
+        </v-list>
+      </v-menu>
+
+      <v-btn color="info" icon="mdi-autorenew" @click="onNewDay" />
+      <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
+    </div>
   </div>
 
   <!-- newDay dialog -->
@@ -91,11 +97,18 @@ const onAddGoal = () => {
 
 <style>
 .goal-toolbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.goal-toolbar__inner {
   max-width: 100%;
   display: flex;
   align-items: stretch;
+  justify-content: end;
   gap: 25px;
-  align-self: flex-end;
 }
 
 .add-goal-dialog .v-overlay__content {
