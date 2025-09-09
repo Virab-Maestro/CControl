@@ -85,11 +85,8 @@ const minusStep = (goal: Goal) => {
       </v-speed-dial>
     </template>
 
-    <v-card-title class="text-info">
-    </v-card-title>
-
     <v-card-subtitle class="mt-3">
-      <v-row align="center" justify="space-between">
+      <v-row align="center" justify="space-between" dense>
         <v-col cols="9">
           <v-progress-linear :model-value="goal.currentStep / goal.total * 100" color="surface" height="25">
             <template v-slot:default="{ value }">
@@ -105,7 +102,7 @@ const minusStep = (goal: Goal) => {
       </v-row>
     </v-card-subtitle>
 
-    <v-card-actions>
+    <v-card-actions class="pa-1">
       <v-btn color="surface" icon="mdi-plus" @click="plusStep(goal)" :disabled="isBtnDisabled" />
       <v-btn color="surface" icon="mdi-minus" @click="minusStep(goal)" :disabled="isBtnDisabled" />
     </v-card-actions>
