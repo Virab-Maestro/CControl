@@ -12,9 +12,9 @@ const goalStore = useGoalStore(),
     activeTheme = ref('dark');
 
 //updating app theme
-watch(activeTheme, () => {
-  theme.global.name.value = activeTheme.value + "Theme";
-})
+const updateActvTheme = (newTheme) => {
+  theme.global.name.value = newTheme + "Theme";
+}
 
 const onNewDay = () => {
   newDayDial.value = true;
@@ -34,17 +34,41 @@ const onAddGoal = () => {
 
 <template>
   <div class="goal-toolbar">
-    <v-select
-        v-model="activeTheme"
-        bg-color="info"
-        :items="appThemes"
-        density="compact"
-        width="150"
-        rounded="lg"
-        variant="solo-filled"
-        hide-details
-    />
-    <v-btn color="info" append-icon="mdi-autorenew" @click="onNewDay">New Day</v-btn>
+    <v-menu
+        location="top center"
+    >
+      <template v-slot:activator="{props}">
+        <v-btn v-bind="props" icon="">
+          <v-sheet
+              rounded="circle"
+              class="pa-2"
+              :color="theme.current.value.colors.primary"
+          />
+        </v-btn>
+      </template>
+
+      <v-list
+          class="overflow-hidden"
+          @click:select="(selScheme) => updateActvTheme(selScheme.id)"
+      >
+        <v-list-item
+            v-for="(scheme, idx) in appThemes"
+            :key="idx"
+            :value="scheme"
+            rounded="circle"
+            max-width="48px"
+        >
+          <v-sheet
+              rounded="circle"
+              width="16px"
+              height="16px"
+              :color="theme.computedThemes.value[(scheme + 'Theme')].colors.primary"
+          />
+        </v-list-item>
+      </v-list>
+    </v-menu>
+
+    <v-btn color="info" icon="mdi-autorenew" @click="onNewDay" />
     <v-btn color="info" icon="mdi-plus" @click="onAddGoal"/>
   </div>
 
@@ -69,7 +93,7 @@ const onAddGoal = () => {
 .goal-toolbar {
   max-width: 100%;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 25px;
   align-self: flex-end;
 }
